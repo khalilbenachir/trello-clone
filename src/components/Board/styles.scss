@@ -1,0 +1,25 @@
+.board {
+    min-height: 100vh;
+    background-color: #89609e;
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+  
+    .add-column {
+      max-width: 300px;
+      width: 100%;
+      background-color: #ffffff3d;
+      height: 100%;
+  
+      &:hover {
+        background-color: #ffffff52;
+      }
+  
+      .add-card.open {
+        padding: 0.4rem 0.6rem;
+  
+        background-color: #ddd;
+      }
+    }
+  }
+  

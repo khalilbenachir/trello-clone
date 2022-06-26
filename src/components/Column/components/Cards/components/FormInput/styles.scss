@@ -1,0 +1,63 @@
+.add-card {
+  position: relative;
+
+  .add-text {
+    color: #172b4d;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.3rem;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 3px;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      background-color: #ddd;
+    }
+
+    label {
+      pointer-events: none;
+    }
+  }
+  button {
+    width: 100%;
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 3px;
+
+    label {
+      pointer-events: none;
+    }
+  }
+
+  form {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    gap: 0.6rem;
+
+    input {
+      padding: 0.4rem 0.6rem;
+      border: none;
+      box-shadow: 0 1px 0 #091e4240;
+    }
+
+    button {
+      background-color: var(--green-color);
+      width: max-content;
+      color: white;
+    }
+  }
+
+  &.open {
+    form {
+      display: flex;
+    }
+
+    .add-text {
+      display: none;
+    }
+  }
+}
