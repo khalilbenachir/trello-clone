@@ -26,7 +26,7 @@ const Cards = ({ cards, columnId }: TCards) => {
           {cards.map((card, index) => (
             <Card
               key={card.id}
-              content={card.content}
+              content={card?.content}
               id={card.id}
               index={index}
             />

@@ -2,7 +2,8 @@ import React, { createContext, useCallback, useState } from "react";
 import { DropResult, ResponderProvided } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 
-import { data, TData } from "../data";
+import { data, TCard, TData } from "../data";
+import { reorderArray } from "./helpers";
 
 type TTrelloProvider = {
   children: React.ReactNode;
@@ -60,12 +61,56 @@ const TrelloProvider = ({ children }: TTrelloProvider) => {
     [setLists]
   );
 
-  const onDragEnd = useCallback((result: DropResult) => {
-    const { destination, source, draggableId } = result;
-    if (!destination) {
+  const onDragEnd = useCallback(
+    (result: DropResult) => {
+      const { destination, source, draggableId } = result;
+      const isCard = draggableId.includes("card-");
+      const isColumn = draggableId.includes("column-");
+
+      if (!destination) {
+        return;
+      }
+
+      if (isCard) {
+        const column = lists.columns[source.droppableId];
+        const cards = reorderArray<TCard>(
+          column.cards,
+          destination.index,
+          source.index
+        );
+        return setLists((prev) => {
+          return {
+            ...prev,
+            columns: {
+              ...prev.columns,
+              [source.droppableId]: {
+                ...prev.columns[source.droppableId],
+                cards,
+              },
+            },
+          };
+        });
+      }
+
+      if (isColumn) {
+        const columnsIds = reorderArray<string>(
+          lists.columnsIds,
+          destination.index,
+          source.index
+        );
+
+        return setLists((prev) => {
+          return {
+            ...prev,
+            columnsIds,
+          };
+        });
+      }
+
       return;
-    }
-  }, []);
+    },
+    [setLists, lists]
+  );
   return (
     <TrelloContext.Provider value={{ lists, addCard, addColumn, onDragEnd }}>
       {children}
